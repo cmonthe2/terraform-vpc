@@ -2,49 +2,49 @@
 # terraform aws create vpc
 resource "aws_vpc" "vpc" {
   cidr_block           = var.vpc-cidr
-  instance_tenancy     = "default"
-  enable_dns_hostnames = true
+  instance_tenancy     = var.instance_tenancy
+  enable_dns_hostnames = var.enable_dns_hostnames
 
   tags = {
-    Name = "Monthe_Vpc"
+    Name = var.vpc-name
   }
 }
 
 # Create Internet Gateway and Attach it to VPC
 # terraform aws create internet gateway
-# resource "aws_internet_gateway" "internet-gateway" {
-#   vpc_id = aws_vpc.vpc.id
+resource "aws_internet_gateway" "internet-gateway" {
+  vpc_id = aws_vpc.vpc.id
 
-#   tags = {
-#     Name = "Test IGW"
-#   }
-# }
+  tags = {
+    Name = var.igw-name
+  }
+}
 
 # # Create Public Subnet 1
 # # terraform aws create subnet
-# resource "aws_subnet" "public-subnet-1" {
-#   vpc_id                  = aws_vpc.vpc.id
-#   cidr_block              = var.Public-subnet-1-cidr
-#   availability_zone       = "us-east-1a"
-#   map_public_ip_on_launch = true
+resource "aws_subnet" "public-subnet-1" {
+  vpc_id                  = var.vpc-id
+  cidr_block              = var.Public-subnet-1-cidr
+  availability_zone       = var.availability_zone-1a
+  map_public_ip_on_launch = var.map_public_ip_on_launch
 
-#   tags = {
-#     Name = "public subnet 1 "
-#   }
-# }
+  tags = {
+    Name = var.public-subnet-name1
+  }
+}
 
 # # Create Public Subnet 2
 # # terraform aws create subnet
-# resource "aws_subnet" "public-subnet-2" {
-#   vpc_id                  = aws_vpc.vpc.id
-#   cidr_block              = var.Public-subnet-2-cidr
-#   availability_zone       = "us-east-1b"
-#   map_public_ip_on_launch = true
+resource "aws_subnet" "public-subnet-2" {
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = var.Public-subnet-2-cidr
+  availability_zone       = var.availability_zone-1b
+  map_public_ip_on_launch = var.map_public_ip_on_launch
 
-#   tags = {
-#     Name = "public subnet 2 "
-#   }
-# }
+  tags = {
+    Name = var.public-subnet-name2
+  }
+}
 
 # # Create Route Table and Add Public Route
 # # terraform aws create route table
